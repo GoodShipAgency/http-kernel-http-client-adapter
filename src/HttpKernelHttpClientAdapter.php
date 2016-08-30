@@ -1,6 +1,6 @@
 <?php
 
-namespace Mashbo\Components\SymfonyHttpClient;
+namespace Mashbo\Components\HttpKernelHttpClient;
 
 use Http\Client\Exception\HttpException;
 use Http\Client\HttpClient;
