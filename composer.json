@@ -1,0 +1,23 @@
+{
+  "name": "mashbo/http-kernel-http-client-adapter",
+  "license": "proprietary",
+  "type": "library",
+  "autoload": {
+      "psr-4": {
+          "Mashbo\\Components\\HttpKernelHttpClient\\": "src/"
+      }
+  },
+  "require": {
+      "psr/http-message": "^1.0",
+      "symfony/psr-http-message-bridge": "^0.3.0",
+      "mashbo/psr7-server-request-factory": "*@dev",
+    "symfony/http-kernel": "^3.1",
+    "php-http/client-common": "^1.2"
+  },
+  "repositories": [
+      {
+          "type": "vcs",
+          "url": "ssh://git@gitlab.mashbo.com:5339/mashbo/psr7-server-request-factory.git"
+      }
+  ]
+}
