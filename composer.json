@@ -9,7 +9,7 @@
   },
   "require": {
       "psr/http-message": "^1.0",
-      "symfony/psr-http-message-bridge": "^0.3.0",
+      "symfony/psr-http-message-bridge": "^0.3.0|^1.0.0",
       "mashbo/psr7-server-request-factory": "*@dev",
       "symfony/http-kernel": "~2.8|^3.0",
       "php-http/client-common": "^1.2"
