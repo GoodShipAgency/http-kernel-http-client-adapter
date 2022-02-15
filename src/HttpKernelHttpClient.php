@@ -14,48 +14,27 @@ use Symfony\Component\HttpKernel\Kernel;
 
 class HttpKernelHttpClient implements HttpClient
 {
-    /**
-     * @var HttpKernelInterface
-     */
-    private $kernel;
-    /**
-     * @var HttpFoundationFactoryInterface
-     */
-    private $httpFoundationFactory;
-    /**
-     * @var HttpMessageFactoryInterface
-     */
-    private $httpMessageFactory;
-    /**
-     * @var ServerRequestFactory
-     */
-    private $serverRequestFactory;
-
     public function __construct(
-        HttpKernelInterface $kernel,
-        HttpFoundationFactoryInterface $httpFoundationFactory,
-        HttpMessageFactoryInterface $httpMessageFactory,
-        ServerRequestFactory $serverRequestFactory
+        private HttpKernelInterface $kernel,
+        private HttpFoundationFactoryInterface $httpFoundationFactory,
+        private HttpMessageFactoryInterface $httpMessageFactory,
+        private ServerRequestFactory $serverRequestFactory
     ) {
-        $this->kernel = $kernel;
-        $this->httpFoundationFactory = $httpFoundationFactory;
-        $this->httpMessageFactory = $httpMessageFactory;
-        $this->serverRequestFactory = $serverRequestFactory;
     }
 
     /**
      * Sends a PSR-7 request.
      *
-     * @param RequestInterface $psrRequest
+     * @param RequestInterface $request
      *
      * @return ResponseInterface
      *
      * @throws \Http\Client\Exception If an error happens during processing the request.
      * @throws \Exception             If processing the request is impossible (eg. bad configuration).
      */
-    public function sendRequest(RequestInterface $psrRequest)
+    public function sendRequest(RequestInterface $request): ResponseInterface
     {
-        $serverRequest = $this->serverRequestFactory->convertToServerRequest($psrRequest);
+        $serverRequest = $this->serverRequestFactory->convertToServerRequest($request);
 
         $foundationRequest = $this->httpFoundationFactory->createRequest(
             $serverRequest
@@ -71,7 +50,7 @@ class HttpKernelHttpClient implements HttpClient
 
         if (!$foundationResponse->isSuccessful()) {
             echo $psrResponse->getBody();
-            throw new HttpException("Kernel returned non-successful status code {$foundationResponse->getStatusCode()}", $psrRequest, $psrResponse);
+            throw new HttpException("Kernel returned non-successful status code {$foundationResponse->getStatusCode()}", $request, $psrResponse);
         }
         return $psrResponse;
     }
